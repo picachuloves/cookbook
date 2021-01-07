@@ -30,23 +30,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        textView = findViewById(R.id.result);
+        //textView = findViewById(R.id.result);
         listView = findViewById(R.id.lvRecipes);
-        /*Call<List<Category>> result = ApiClient.getInstance()
-                .getCategoryJsonApi()
-                .getAll();*/
         Call<List<BaseRecipe>> res = ApiClient.getInstance()
                 .getRecipeJsonApi()
                 .getAll();
         ArrayList<String> resi = new ArrayList<>();
+        List<BaseRecipe> recipes;//////////////////////////////////////////////////////////////////////////////////////////
         res.enqueue(new Callback<List<BaseRecipe>>() {
             @Override
             public void onResponse(Call<List<BaseRecipe>> call, Response<List<BaseRecipe>> response) {
                 if (!response.isSuccessful()) {
-                    textView.setText(response.code());
+                    resi.add(Integer.toString(response.code()));
                 }
 
-                List<BaseRecipe> recipes = response.body();
+                recipes = response.body();
 
                 for (BaseRecipe recipe : recipes) {
                     resi.add(recipe.getName());
@@ -55,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<BaseRecipe>> call, Throwable t) {
-                textView.setText(t.getMessage());
+                resi.add(t.getMessage());
             }
         });
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, resi);
@@ -64,31 +62,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MainActivity.this, ItemActivity.class);
-                intent.putExtra("r_name", ((TextView)view).getText().toString());
+                intent.putExtra("r_id", ((TextView)view).getText().toString());
                 startActivity(intent);
             }
         });
-        /*result.enqueue(new Callback<List<Category>>() {
-            @Override
-            public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
-                if (!response.isSuccessful()) {
-                    textView.setText(response.code());
-                }
-
-                List<Category> categories = response.body();
-
-                for (Category category : categories) {
-                    String content = "";
-                    content += "ID: " + category.getId() + '\n';
-                    content += "Name: " + category.getName() + "\n\n";
-                    textView.append(content);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Category>> call, Throwable t) {
-                textView.setText(t.getMessage());
-            }
-        });*/
     }
 }
