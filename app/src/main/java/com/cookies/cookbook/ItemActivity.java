@@ -39,7 +39,7 @@ public class ItemActivity extends AppCompatActivity {
         steps = findViewById(R.id.steps);
 
         Intent intent = getIntent();
-        int id = Integer.parseInt(intent.getStringExtra("r_id"));
+        int id = Integer.parseInt(intent.getStringExtra("r_id").split(":")[0]);
         Call<Recipe> res = ApiClient.getInstance()
                 .getRecipeJsonApi()
                 .getById(id);

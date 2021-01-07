@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
                 .getRecipeJsonApi()
                 .getAll();
         ArrayList<String> resi = new ArrayList<>();
-        List<BaseRecipe> recipes;//////////////////////////////////////////////////////////////////////////////////////////
         res.enqueue(new Callback<List<BaseRecipe>>() {
             @Override
             public void onResponse(Call<List<BaseRecipe>> call, Response<List<BaseRecipe>> response) {
@@ -44,10 +43,10 @@ public class MainActivity extends AppCompatActivity {
                     resi.add(Integer.toString(response.code()));
                 }
 
-                recipes = response.body();
+                List<BaseRecipe> recipes = response.body();
 
                 for (BaseRecipe recipe : recipes) {
-                    resi.add(recipe.getName());
+                    resi.add(recipe.getId() + ":" + recipe.getName());
                 }
             }
 
