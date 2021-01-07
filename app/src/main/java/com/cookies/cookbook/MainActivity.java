@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cookies.cookbook.api.model.BaseRecipe;
 import com.cookies.cookbook.api.model.Category;
@@ -40,7 +41,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<BaseRecipe>> call, Response<List<BaseRecipe>> response) {
                 if (!response.isSuccessful()) {
-                    resi.add(Integer.toString(response.code()));
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            Integer.toString(response.code()),
+                            Toast.LENGTH_SHORT);
+                    toast.show();
                 }
 
                 List<BaseRecipe> recipes = response.body();
@@ -52,7 +56,10 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<BaseRecipe>> call, Throwable t) {
-                resi.add(t.getMessage());
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        t.getMessage(),
+                        Toast.LENGTH_SHORT);
+                toast.show();
             }
         });
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, resi);
