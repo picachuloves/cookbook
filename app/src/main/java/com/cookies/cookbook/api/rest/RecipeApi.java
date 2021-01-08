@@ -19,8 +19,8 @@ public interface RecipeApi {
     Call<Recipe> addRecipe(@Body Recipe recipe);
 
     @GET("/recipes/get-base-by-categories-and-products")
-    Call<BaseRecipe> getBaseRecipesByCategoriesAndProducts(@Query("categoryIds") List<Integer> categoryIds,
-                                                           @Query("productIds") List<Integer> productIds);
+    Call<List<BaseRecipe>> getBaseRecipesByCategoriesAndProducts(@Query("categoryIds") List<Integer> categoryIds,
+                                                                 @Query("productIds") List<Integer> productIds);
 
     @GET("/recipes/get-by-id")
     Call<Recipe> getById(@Query("id") int id);

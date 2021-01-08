@@ -85,12 +85,22 @@ public class ItemActivity extends AppCompatActivity {
     private void setIngredients(List<Ingredient> recipeIngredients) {
         for (Ingredient ingredient : recipeIngredients) {
             TableRow row = new TableRow(ItemActivity.this);
-            TextView ing_name = new TextView(ItemActivity.this);
-            TextView ing_amount = new TextView(ItemActivity.this);
-            ing_name.setText(ingredient.getProduct().getName());
-            ing_amount.setText(String.valueOf(ingredient.getAmount()));
-            row.addView(ing_name, 0);
-            row.addView(ing_amount, 1);
+            TextView ingredientName = new TextView(ItemActivity.this);
+            TextView ingredientAmount = new TextView(ItemActivity.this);
+            TextView ingredientMeasure = new TextView(ItemActivity.this);
+
+            ingredientName.setPadding(80, 0, 0, 0);
+            ingredientAmount.setPadding(50, 0, 0, 0);
+            ingredientMeasure.setPadding(50, 0, 0, 0);
+
+            ingredientName.setText(ingredient.getProduct().getName());
+            ingredientAmount.setText(String.valueOf(ingredient.getAmount()));
+            ingredientMeasure.setText(ingredient.getMeasure());
+
+            row.addView(ingredientName, 0);
+            row.addView(ingredientAmount, 1);
+            row.addView(ingredientMeasure, 2);
+
             ingredients.addView(row);
         }
     }
